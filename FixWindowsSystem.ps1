@@ -39,6 +39,9 @@ $currPrincipal = new-object System.Security.Principal.WindowsPrincipal(${currID}
 $adminRole = [System.Security.Principal.WindowsBuiltInRole]::Administrator
 if($currPrincipal.IsInRole(${adminRole}))
 {
+    # Show version number
+    Write-Output -InputObject "Fix Windows System by 0xNixxy v1.0.1"
+    Write-Output -InputObject ""
 
     # ===========================================
     # DETECT AND REPAIR ERRORS IN COMPONENT STORE

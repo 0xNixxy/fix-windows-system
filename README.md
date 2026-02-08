@@ -1,4 +1,4 @@
-# fix-windows-system-powershell
+# fix-windows-system
 
 <!-- markdownlint-disable MD033 -->
 <!-- markdownlint-disable MD042 -->
@@ -8,7 +8,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
 ![Made with PowerShell 5.1](https://img.shields.io/badge/PowerShell-5.1-5391FE?style=for-the-badge&logo=powershell&logoColor=white)
-![Tested on Windows 11 24H2](https://img.shields.io/badge/Windows%2011-24H2-0079d5?style=for-the-badge&logo=Windows%2011&logoColor=white)
+![Tested on Windows 11 25H2](https://img.shields.io/badge/Windows%2011-25H2-0079d5?style=for-the-badge&logo=Windows%2011&logoColor=white)
 
 </div>
 
@@ -17,41 +17,41 @@
 
 ## Overview
 
-`FixWindowsSystem.ps1` is designed to be a single stand-alone script to
-automatically detect and repair corruption found in the Windows 11 system. This
-script uses tools that come pre-packaged with a Windows 11 Home operating system
-and does not require installation of any third party software.
+This repo contains standalone scripts to automatically detect and repair
+corruption(s) found in the system components and filesystem of a Windows 11
+operating system (OS). The scripts uses only tools that come pre-packaged with
+the Windows 11 Home OS and does not require installation of any third-party
+software.
 
-As PowerShell 5.1 is packaged together with Windows 11, the script has been
-written to use only [PowerShell 5.1 commands](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/?view=powershell-5.1).
+For PowerShell users, use `FixWindowsSystem.ps1`. As PowerShell 5.1 is packaged
+together with Windows 11, this PowerShell script has been written to use only
+[PowerShell 5.1 commands](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/?view=powershell-5.1).
 
-## Windows System Repair Workflow
+## Windows system repair workflow
 
 The script repairs Windows in the following steps:
 
 1. Detect and repair corruption in the current Windows operating system image
    using the
    [Repair-WindowsImage](https://learn.microsoft.com/en-us/powershell/module/dism/repair-windowsimage)
-   cmdlet. `Repair-WindowsImage` is a PowerShell equivalent to
-   [DISM](https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/what-is-dism?view=windows-11) tool.
+   cmdlet or [DISM](https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/what-is-dism?view=windows-11)
+   tool. `Repair-WindowsImage` is a PowerShell equivalent to `DISM` tool.
 
 1. Detect and repair corruption in Windows system files using the
    [sfc](https://learn.microsoft.com/en-us/troubleshoot/windows-server/deployment/system-file-checker)
-   tool.
+   tool. There seems to be no PowerShell equivalent for this tool.
 
 1. Detect and repair corruption in Windows file system using
    [Repair-Volume](https://learn.microsoft.com/en-us/powershell/module/storage/repair-volume)
-   cmdlet. `Repair-Volume` is a PowerShell equivalent to
-   [chkdsk](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/chkdsk)
-   tool.
+   cmdlet or [chkdsk](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/chkdsk)
+   tool. `Repair-Volume` is a PowerShell equivalent to `chkdsk` tool.
 
-1. Optimise file system of current volume using
+1. Optimise file system (i.e. defrag HDD or retrim SSD) of current volume using
    [Optimize-Volume](https://learn.microsoft.com/en-us/powershell/module/storage/optimize-volume)
-   cmdlet. `Optimize-Volume` is a PowerShell equivalent to
-   [defrag](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/defrag)
-   tool to defrag HDD or retrim SSD.
+   cmdlet or [defrag](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/defrag)
+   tool. `Optimize-Volume` is a PowerShell equivalent to `defrag` tool.
 
-## Usage Guide
+## Usage guide for PowerShell users
 
 To use the script on your Windows 11 system
 
@@ -68,9 +68,7 @@ To use the script on your Windows 11 system
    Set-ExecutionPolicy -ExecutionPolicy Bypass
    ```
 
-   **Note**
-
-   You can check your current policy with
+   You can check your current policy with the command below.
 
    ```PowerShell
    Get-ExecutionPolicy -List
@@ -84,7 +82,25 @@ To use the script on your Windows 11 system
    copy ..\user\Downloads\FixWindowsSystem.ps1 .
    ```
 
-1. Execute the script and wait for the repairs to finish.
+1. (Optional pre-requisite) Your Windows system may highlight a security warning
+   about running scripts downloaded from the internet and display the message
+   below.
+
+   ```Text
+   Security warning
+   Run only scripst that you trust. While scripts from the internet can be
+   useful, this script can potentially harm your computer. If you trust this
+   script, use the Unblock-File cmdlet to allow the script to run without this
+   warning message. Do you want to run C:\...\FixWindowsSystem.ps1?
+   ```
+
+   You can mark the script as "safe to run" with the command below.
+
+   ```PowerShell
+   Unblock-File .\FixWindowsSystem.ps1
+   ```
+
+1. Execute the script in `Terminal (Admin)`  and wait for the repairs to finish.
 
    ```PowerShell
    .\FixWindowsSystem.ps1
@@ -94,6 +110,8 @@ To use the script on your Windows 11 system
 
    ```console
    PS C:\Users\user\Downloads> .\FixWindowsSystem.ps1
+   Fix Windows System by 0xNixxy v1.0.1
+
    🔍 Checking Windows Component Store...
 
    Path             :

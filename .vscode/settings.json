@@ -4,6 +4,11 @@
     "chkdsk",
     "scannow",
     "Cleanup",
-    "standalone"
+    "standalone",
+    "0xNixxy",
+    "ERRORLEVEL",
+    "rundll",
+    "pnpclean",
+    "MAXCLEAN"
   ]
 }

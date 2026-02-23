@@ -45,7 +45,7 @@ REM Show program name and version
 
 ECHO.
 ECHO  ------------------------------------
-ECHO  Fix Windows System v1.1.0 by 0xNixxy
+ECHO  Fix Windows System v1.2.0 by 0xNixxy
 ECHO  ------------------------------------
 ECHO.
 

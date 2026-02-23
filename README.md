@@ -67,56 +67,51 @@ The script repairs Windows in the following steps:
 
 ## Usage guide for Command Prompt users
 
-To use the script on your Windows 11 system
+To use the batch file on your Windows 11 system
 
 1. Download `FixWindowsSystem.bat` to computer.
 
-1. Open Command Prompt with Administrator privileges.
+1. Right-click on the batch file and select "Run as administrator". A UAC prompt
+   will appear to request for elevation to run the script with Administrator
+   privileges.
 
-1. (Optional) If your active Windows account is a standard user account
-   (i.e., non-admin account), you can copy the script to your admin account's
-   folder for convenience.
+1. Alternatively, open Command Prompt with Administrator privileges.
 
    ```bat
-   copy ..\user\Downloads\FixWindowsSystem.bat .
-   ```
-
-1. Execute the script and wait for the repairs to finish.
-
-   ```bath
    FixWindowsSystem.bat
    ```
 
 ## Usage guide for PowerShell users
 
-To use the script on your Windows 11 system
+> [!TIP]
+> Your script may not execute properly on your local machine if you use the
+> default PowerShell Execution Policy that sets `Undefined` for LocalMachine.
+> You will need to perform a one-time relaxing of this policy using PowerShell
+> Terminal with Administrator privileges.
+>
+> ```PowerShell
+> Set-ExecutionPolicy -ExecutionPolicy Bypass
+> ```
+>
+> Verify that your execution policy for LocalMachine is updated to `Bypass`.
+>
+> ```PowerShell
+> Get-ExecutionPolicy -List
+> ```
+>
+> The expected output should be similar to below.
+>
+> ```Text
+>         Scope ExecutionPolicy
+>         ----- ---------------
+> MachinePolicy       Undefined
+>    UserPolicy       Undefined
+>       Process       Undefined
+>   CurrentUser       Undefined
+>  LocalMachine          Bypass
+> ```
 
-1. (Pre-requisite) Your script may not execute properly on your local machine if
-   you use the default PowerShell Execution Policy that sets `Undefined` for
-   LocalMachine. You will need to perform a one-time relaxing of this policy
-   using PowerShell Terminal with Administrator privileges.
-
-   ```PowerShell
-   Set-ExecutionPolicy -ExecutionPolicy Bypass
-   ```
-
-   Verify that your execution policy for LocalMachine is updated to `Bypass`.
-
-   ```PowerShell
-   Get-ExecutionPolicy -List
-   ```
-
-   The expected output should be similar to below.
-
-   ```Text
-           Scope ExecutionPolicy
-           ----- ---------------
-   MachinePolicy       Undefined
-      UserPolicy       Undefined
-         Process       Undefined
-     CurrentUser       Undefined
-    LocalMachine          Bypass
-   ```
+To use the PowerShell script on your Windows 11 system
 
 1. Download `FixWindowsSystem.ps1` to your Downloads folder.
 
@@ -131,19 +126,20 @@ To use the script on your Windows 11 system
    .\FixWindowsSystem.ps1
    ```
 
-1. (Optional) Your Windows system may highlight a security warning about running
-   scripts downloaded from the internet and display the message below.
-
-   ```Text
-   Security warning
-   Run only scripts that you trust. While scripts from the internet can be
-   useful, this script can potentially harm your computer. If you trust this
-   script, use the Unblock-File cmdlet to allow the script to run without this
-   warning message. Do you want to run C:\...\FixWindowsSystem.ps1?
-   ```
-
-   You can mark the script as "safe to run" with the command below.
-
-   ```PowerShell
-   Unblock-File .\FixWindowsSystem.ps1
-   ```
+> [!TIP]
+> Your Windows system may highlight a security warning about running
+> scripts downloaded from the internet and display the message below.
+>
+> ```Text
+> Security warning
+> Run only scripts that you trust. While scripts from the internet can be
+> useful, this script can potentially harm your computer. If you trust this
+> script, use the Unblock-File cmdlet to allow the script to run without this
+> warning message. Do you want to run C:\...\FixWindowsSystem.ps1?
+> ```
+>
+> You can mark the script as "safe to run" with the command below.
+>
+> ```PowerShell
+> Unblock-File .\FixWindowsSystem.ps1
+> ```

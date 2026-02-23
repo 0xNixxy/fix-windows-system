@@ -35,19 +35,43 @@
 # ==============================================================================
 
 
+# Script Pre-requisites
 
-# Check for Admin rights and quit script otherwise
+#Requires -Version 5.1  # Minimum version 5.1
+
+
+
+# Check for Admin rights
+# If not in Admin Powershell, automatically re-launch in Admin Powershell
 
 $currID = [System.Security.Principal.WindowsIdentity]::GetCurrent()
-$currPrincipal = new-object System.Security.Principal.WindowsPrincipal(${currID})
+$currPrincipal = New-Object System.Security.Principal.WindowsPrincipal(${currID})
 $adminRole = [System.Security.Principal.WindowsBuiltInRole]::Administrator
 
 if(-not $currPrincipal.IsInRole(${adminRole}))
 {
     Write-Warning -Message  "[INFO]    This script requires administrative privileges."
-    Write-Warning -Message  "[INFO]    Please run `"Windows PowerShell`" as Administrator."
-    return
+    Write-Warning -Message  "[INFO]    Re-launching script in PowerShell (Admin)."
+
+    $adminPowerShellArgs = "-ExecutionPolicy Bypass -File `"$PSCommandPath`""
+    Start-Process powershell.exe -Verb RunAs -ArgumentList $adminPowerShellArgs
+
+    # Exit current non-admin PowerShell session
+    exit
 }
+
+
+
+# Add blank lines to avoid script text output from being obscured by progress
+# pop-ups by Repair-WindowsImage and Repair-Volume.
+
+Write-Output -InputObject ""
+Write-Output -InputObject ""
+Write-Output -InputObject ""
+Write-Output -InputObject ""
+Write-Output -InputObject ""
+Write-Output -InputObject ""
+Write-Output -InputObject ""
 
 
 
@@ -55,7 +79,7 @@ if(-not $currPrincipal.IsInRole(${adminRole}))
 
 Write-Output -InputObject ""
 Write-Output -InputObject "------------------------------------"
-Write-Output -InputObject "Fix Windows System v1.1.0 by 0xNixxy"
+Write-Output -InputObject "Fix Windows System v1.2.0 by 0xNixxy"
 Write-Output -InputObject "------------------------------------"
 Write-Output -InputObject ""
 

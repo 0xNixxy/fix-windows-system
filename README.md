@@ -91,40 +91,52 @@ To use the script on your Windows 11 system
 
 To use the script on your Windows 11 system
 
-1. Download `FixWindowsSystem.ps1` to computer.
-
-1. Open PowerShell Terminal with Administrator privileges.
-
-1. (Optional pre-requisite) If you have problems executing PowerShell scripts on
-   your local machine, you may need to first perform a one-time relaxing of
-   PowerShell Execution Policy in PowerShell Terminal with Administrator
-   privileges.
+1. (Pre-requisite) Your script may not execute properly on your local machine if
+   you use the default PowerShell Execution Policy that sets `Undefined` for
+   LocalMachine. You will need to perform a one-time relaxing of this policy
+   using PowerShell Terminal with Administrator privileges.
 
    ```PowerShell
    Set-ExecutionPolicy -ExecutionPolicy Bypass
    ```
 
-   You can check your current policy with the command below.
+   Verify that your execution policy for LocalMachine is updated to `Bypass`.
 
    ```PowerShell
    Get-ExecutionPolicy -List
    ```
 
-1. (Optional) If your active Windows account is a standard user account
-   (i.e., non-admin account), you can copy the script to your admin account's
-   folder for convenience.
+   The expected output should be similar to below.
 
-   ```PowerShell
-   copy ..\user\Downloads\FixWindowsSystem.ps1 .
+   ```Text
+           Scope ExecutionPolicy
+           ----- ---------------
+   MachinePolicy       Undefined
+      UserPolicy       Undefined
+         Process       Undefined
+     CurrentUser       Undefined
+    LocalMachine          Bypass
    ```
 
-1. (Optional pre-requisite) Your Windows system may highlight a security warning
-   about running scripts downloaded from the internet and display the message
-   below.
+1. Download `FixWindowsSystem.ps1` to your Downloads folder.
+
+1. Right-click on the script and select "Run with PowerShell". A UAC prompt will
+   appear to request for elevation to run the script with Administrator
+   privileges.
+
+1. Alternatively, open PowerShell Terminal with Administrator privileges and
+   execute the script.
+
+   ```PowerShell
+   .\FixWindowsSystem.ps1
+   ```
+
+1. (Optional) Your Windows system may highlight a security warning about running
+   scripts downloaded from the internet and display the message below.
 
    ```Text
    Security warning
-   Run only scripst that you trust. While scripts from the internet can be
+   Run only scripts that you trust. While scripts from the internet can be
    useful, this script can potentially harm your computer. If you trust this
    script, use the Unblock-File cmdlet to allow the script to run without this
    warning message. Do you want to run C:\...\FixWindowsSystem.ps1?
@@ -134,10 +146,4 @@ To use the script on your Windows 11 system
 
    ```PowerShell
    Unblock-File .\FixWindowsSystem.ps1
-   ```
-
-1. Execute the script and wait for the repairs to finish.
-
-   ```PowerShell
-   .\FixWindowsSystem.ps1
    ```

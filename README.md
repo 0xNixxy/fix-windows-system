@@ -83,33 +83,11 @@ To use the batch file on your Windows 11 system
 
 ## Usage guide for PowerShell users
 
-> [!TIP]
-> Your script may not execute properly on your local machine if you use the
-> default PowerShell Execution Policy that sets `Undefined` for LocalMachine.
-> You will need to perform a one-time relaxing of this policy using PowerShell
-> Terminal with Administrator privileges.
->
-> ```PowerShell
-> Set-ExecutionPolicy -ExecutionPolicy Bypass
-> ```
->
-> Verify that your execution policy for LocalMachine is updated to `Bypass`.
->
-> ```PowerShell
-> Get-ExecutionPolicy -List
-> ```
->
-> The expected output should be similar to below.
->
-> ```Text
->         Scope ExecutionPolicy
->         ----- ---------------
-> MachinePolicy       Undefined
->    UserPolicy       Undefined
->       Process       Undefined
->   CurrentUser       Undefined
->  LocalMachine          Bypass
-> ```
+> [!IMPORTANT]
+> If your script is unable to execute properly on your Windows machine, you may
+> need to relax your PowerShell Execution Policy or unblock your script from
+> Smart App Control. See the sections below for more information on how to do
+> this.
 
 To use the PowerShell script on your Windows 11 system
 
@@ -126,20 +104,70 @@ To use the PowerShell script on your Windows 11 system
    .\FixWindowsSystem.ps1
    ```
 
-> [!TIP]
-> Your Windows system may highlight a security warning about running
-> scripts downloaded from the internet and display the message below.
->
-> ```Text
-> Security warning
-> Run only scripts that you trust. While scripts from the internet can be
-> useful, this script can potentially harm your computer. If you trust this
-> script, use the Unblock-File cmdlet to allow the script to run without this
-> warning message. Do you want to run C:\...\FixWindowsSystem.ps1?
-> ```
->
-> You can mark the script as "safe to run" with the command below.
->
-> ```PowerShell
-> Unblock-File .\FixWindowsSystem.ps1
-> ```
+### How to set Bypass Policy on Local Machine
+
+If you use the default PowerShell Execution Policy on your Windows machine,
+the policy for local machine is set to `Undefined`. This will cause PowerShell
+scripts to be blocked and they will not be able to execute locally your machine.
+
+In order to execute PowerShell scripts locally on your Windows machine, you will
+need to perform a one-time relaxing of this policy using PowerShell Terminal
+with Administrator privileges with the following command.
+
+```PowerShell
+Set-ExecutionPolicy -ExecutionPolicy Bypass
+```
+
+Verify that your execution policy for LocalMachine is updated to `Bypass`.
+
+```PowerShell
+Get-ExecutionPolicy -List
+```
+
+The expected output should be similar to below.
+
+```Text
+        Scope ExecutionPolicy
+        ----- ---------------
+MachinePolicy       Undefined
+   UserPolicy       Undefined
+      Process       Undefined
+  CurrentUser       Undefined
+ LocalMachine          Bypass
+```
+
+### How to unblock script from Smart App Control
+
+When you download a PowerShell script and want to execute it on your machine,
+Smart App Control in your Windows may block the script from executing and show a
+security warning about running scripts downloaded from the internet.
+
+If you right-click the PowerScript file to execute it, the security warning
+appears as a pop-up with the following message:
+
+```Text
+Smart App Control blocked a file that may be unsafe
+
+This file was blocked because files of this type from the internet can be
+dangerours.
+
+Learn more
+```
+
+Alternatively, if you opened PowerShell Terminal and tried to execute the
+script, you will see the following security warning appear in the terminal:
+
+```Text
+Security warning
+Run only scripts that you trust. While scripts from the internet can be
+useful, this script can potentially harm your computer. If you trust this
+script, use the Unblock-File cmdlet to allow the script to run without this
+warning message. Do you want to run C:\...\FixWindowsSystem.ps1?
+```
+
+In both cases above, you can mark the script as "safe to run" with the command
+below to unblock the script from Smart App Control.
+
+```PowerShell
+Unblock-File .\FixWindowsSystem.ps1
+```
